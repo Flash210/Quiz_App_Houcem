@@ -18,6 +18,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -42,10 +44,10 @@ fun Questions(viewModel: QuestionsViewModel) {
         Log.d("xx", "Questions ..loading ")
 
     } else {
-        if ( questions!=null)
-        {
-            QuestionsDisplay(questionsItem = questions.first(),
-           )
+        if (questions != null) {
+            QuestionsDisplay(
+                questionsItem = questions.first(),
+            )
         }
 
     }
@@ -58,9 +60,9 @@ fun Questions(viewModel: QuestionsViewModel) {
 @Composable
 fun QuestionsDisplay(
     questionsItem: QuestionsItem,
-  //  questionIndex: MutableState<Int>,
-   // viewModel: QuestionsViewModel,
-   // onNextClicked: (Int) -> Unit
+    //  questionIndex: MutableState<Int>,
+    // viewModel: QuestionsViewModel,
+    // onNextClicked: (Int) -> Unit
 ) {
     val pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f)
 
@@ -160,9 +162,56 @@ fun QuestionsDisplay(
                             )
                         )
                         //end Radio Buttton
+                        val annotatedString = buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    fontWeight = FontWeight.Light,
+                                    color = if (correctAnswerState.value == true && index == answerState.value) {
+                                        Color.Green
+                                    } else {
+                                        if (correctAnswerState.value == false && index == answerState.value) {
+                                            Color.Red
+                                        } else {
+                                            AppColor.mOffWhite
+                                        }
+
+                                    }, fontSize = 17.sp
+                                )
+                            ) {
+                                append(answerText)
+
+
+                            }
+                        }
+                        //end annotated String
+                        Text(
+                            text = annotatedString,
+                        modifier = Modifier.padding(6.dp))
 
 
                     }
+
+                }
+
+                Button(
+                    onClick = { /*TODO*/ },
+                    modifier= Modifier
+                        .padding(3.dp)
+                        .align(alignment = Alignment.CenterHorizontally),
+                    shape = RoundedCornerShape(34.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = AppColor.mLightBlue
+                    )
+
+
+                    ) {
+                    Text(text = "Next ",
+                    modifier = Modifier.padding(4.dp),
+                        color=AppColor.mOffWhite,
+                        fontSize = 17.sp
+
+                        )
+
 
                 }
             }
