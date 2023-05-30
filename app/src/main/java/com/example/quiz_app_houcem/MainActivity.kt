@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quiz_app_houcem.screens.QuestionsViewModel
+import com.example.quiz_app_houcem.screens.QuizHome
 import com.example.quiz_app_houcem.ui.theme.Quiz_App_HoucemTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,36 +42,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-@Composable
-fun QuizHome(viewModel: QuestionsViewModel =hiltViewModel()  )
-{
-Questions(viewModel = viewModel)
-}
 
-
- @Composable
- fun Questions(viewModel: QuestionsViewModel)
- {
-     val questions=viewModel.data.value.data?.toMutableList()
-
-     Log.d("xx","Questions ${questions?.size}")
-
-     if ( viewModel.data.value.loading ==true )
-     {
-         Log.d("xx","Questions ..loading ")
-
-     }else
-     {
-         questions?.forEach { questionsItem ->
-
-             Log.d("xx","Questions :${questionsItem.question}")
-
-
-         }
-     }
-
-
- }
 
 
 
